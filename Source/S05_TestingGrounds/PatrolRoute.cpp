@@ -6,4 +6,3 @@ TArray<AActor*> UPatrolRoute::GetPatrolPoints() const
 {
     return PatrolPoints;
 }
-
