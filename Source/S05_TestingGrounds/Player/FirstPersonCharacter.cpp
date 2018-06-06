@@ -82,7 +82,14 @@ void AFirstPersonCharacter::BeginPlay()
     
     Gun = GetWorld()->SpawnActor<AGun>(GunBlueprint);
 	Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
+    Gun->AnimInstance = Mesh1P->GetAnimInstance();
     //Attach gun mesh component to Skeleton, doing it here because the skeleton is not yet created in the constructor
+    
+    // Bind fire event
+    InputComponent->BindAction("Fire", IE_Pressed, Gun, &AGun::OnFire);
+    
+    // Enable touchscreen input
+    EnableTouchscreenMovement(InputComponent);
     
 	// Show or hide the two versions of the gun based on whether or not we're using motion controllers.
 	if (bUsingMotionControllers)
@@ -108,12 +115,6 @@ void AFirstPersonCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 	// Bind jump events
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
-
-	// Bind fire event
-	//PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AFirstPersonCharacter::OnFire);
-
-	// Enable touchscreen input
-	EnableTouchscreenMovement(PlayerInputComponent);
 
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AFirstPersonCharacter::OnResetVR);
 
