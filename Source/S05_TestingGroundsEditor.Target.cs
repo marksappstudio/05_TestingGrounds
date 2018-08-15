@@ -9,5 +9,9 @@ public class S05_TestingGroundsEditorTarget : TargetRules
 	{
 		Type = TargetType.Editor;
 		ExtraModuleNames.Add("S05_TestingGrounds");
+
+    bUseUnityBuild = false;
+    bUsePCHFiles = false;
+
 	}
 }
